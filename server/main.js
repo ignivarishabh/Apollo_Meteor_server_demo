@@ -1,21 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { createApolloServer } from 'meteor/apollo';
-import schema from '/imports/api/schema';
+import schema from '/imports/graphql/schema';
 import Tasks from '/imports/collections/tasks'
+import setupApi,{app} from '/imports/rest'
+
 
 
 createApolloServer({
   schema,
+  
 });
 
+
 Meteor.startup(()=>{
-	//  console.log('',Tasks.find().fetch())
-	// WebApp.rawConnectHandlers.use(function(req, res, next) {
-	//   res.setHeader("Access-Control-Allow-Origin", "*");
-	//   return next();
-	// });
-	// WebApp.rawConnectHandlers.use("/public", function(req, res, next) {
-	//   res.setHeader("Access-Control-Allow-Origin", "*");
-	//   return next();
-	// });
+	setupApi();
+
+	WebApp.connectHandlers.use(app);
+
+
 })

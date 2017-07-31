@@ -6,8 +6,14 @@ export const typeDefs = `
 		isCompleted: Boolean
 	}
 	type SuccessMessgae{
-		Success:Boolean
+		Success:String
 		result: [Task]
+	}
+
+	type SingleTask{
+		error:Boolean
+		msg:String
+		result:Task
 	}
 
 	type DeleteTask{
@@ -16,7 +22,7 @@ export const typeDefs = `
 
 	type Query {
 		getTasks:SuccessMessgae
-		getTask(_id:String!):Task
+		getTask(_id:String!):SingleTask
 	}
 
 	type Mutation {
@@ -40,21 +46,19 @@ export const resolvers = {
 	Query:{
 		getTasks(root,args,context){
 			result = Tasks.getAllTasks();
-			if(result){
-				return
-					{
-						Success:true,
-						result
-					 }
-			}else{
-				return{
-						Success:false
-					  }
-			}
+			return({
+					Success:'true',
+					result:result
+				   })
 		},
 
 		getTask(root,{_id},context){
-			return Tasks.getTask(_id)
+			let result = Tasks.getTask(_id);
+			 if(result)
+			 return {error:false,msg:'data found Successfully',result}
+			else{
+			 return {error:true,msg:'no data found',result:null}	
+			}
 		}
 		
 	},
