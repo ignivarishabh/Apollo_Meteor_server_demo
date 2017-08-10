@@ -1,4 +1,3 @@
-export default function middleware (req, res, next) {
-	  console.log('LOGGED')
+export default function middleware (req, res, next) { 
 	  next();
 	} 

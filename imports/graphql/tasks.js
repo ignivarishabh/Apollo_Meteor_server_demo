@@ -45,6 +45,7 @@ export const typeDefs = `
 export const resolvers = {
 	Query:{
 		getTasks(root,args,context){
+			console.log('hi')
 			result = Tasks.getAllTasks();
 			return({
 					Success:'true',
